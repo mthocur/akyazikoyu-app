@@ -1,14 +1,16 @@
-# A Blank PhoneGap App
+# Akyazi Koyu Mobile App
 
-## Usage
+## DEV
 
-### PhoneGap CLI
+### PhoneGap Desktop
 
-    $ phonegap create my-app --template blank
+    -> add existing directory 
+    -> run project
 
-### Desktop
+## Build
 
-In your browser, open the file:
+### PhoneGap Build
 
-    /www/index.html
+clone repo with git or upload as zip
 
+-> build.phonegap.com
