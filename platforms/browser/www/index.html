@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <meta http-equiv="Content-Security-Policy" 
+    content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"/>-->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="author" content="SindevoThemes" />
+    <meta name="description" content="GoMobile - A next generation web app theme" />
+    <meta name="keywords" content="mobile web app, mobile template, mobile design, mobile app design, mobile app theme, mobile wordpress theme, my mobile app" />
+
+    <title>Akyazı Köyü Derneği Uygulaması</title>
+
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="colors/green/green.css"/>
+    <link type="text/css" rel="stylesheet" href="css/jquery.fancybox.min.css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400&display=swap&subset=latin-ext" rel="stylesheet">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-320x460.png" />
+    <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+
+    
+    <style type="text/css">
+        .pagination li{
+            display: inline-block;
+            list-style: none;
+            margin:20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+        
+    <div id="wrapper">
+        <div id="content">
+            <script id="anasayfa-tpl" type="text/template">
+                <div class="sliderbg_menu">
+                    
+                    <div class="logo">
+                        <a href="#">
+                            <img src="colors/green/images/logo.png" alt="" title="" border="0" />
+                        </a>
+                    </div>
+                    
+                    <nav id="menu">
+                        <ul>
+                            {{#if isLogged }}
+                            <li class="uyelik_menu">
+                                <a href="#" onclick="route('usercp');">
+                                    <img src="images/icons/about.png" alt="" title="" />
+                                    <span>Üye Paneli</span>
+                                </a>
+                            </li>
+                            {{else}}
+                            <li class="uyelik_menu">
+                                <a href="#" onclick="route('giris');">
+                                    <img src="images/icons/about.png" alt="" title="" />
+                                    <span>Üye Girişi</span>
+                                </a>
+                            </li>
+                            {{/if}}
+
+                            <li>
+                                <a href="#" onclick="route('koyumuz');">
+                                    <img src="images/icons/law.png" alt="" title="" />
+                                    <span>Köyümüz</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="route('dernegimiz');">
+                                    <img src="images/icons/law.png" alt="" title="" />
+                                    <span>Derneğimiz</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="route('haberler')">
+                                    <img src="images/icons/menu.png" alt="" title="" />
+                                    <span>Haberler</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="route('duyurular')">
+                                    <img src="images/icons/menu.png" alt="" title="" />
+                                    <span>Duyurular</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="route('galeri')">
+                                    <img src="images/icons/photos.png" alt="" title="" />
+                                    <span>Galeri</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="route('iletisim')">
+                                    <img src="images/icons/contact.png" alt="" title="" />
+                                    <span>İletişim</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="route('paylasimlar')">
+                                    <img src="images/icons/blog.png" alt="" title="" />
+                                    <span>Paylaşımlar</span>
+                                </a>
+                            </li>
+                            {{#if isAdmin}}
+                            <li>
+                                <a href="#" onclick="route('yonetim')">
+                                    <img src="images/icons/services.png" alt="" title="" />
+                                    <span>Yonetim</span>
+                                </a>
+                            </li>
+                            {{/if}}
+                        </ul>
+                    </nav>
+                    <div class="clear"></div>
+                </div>
+            </script>
+
+            <script id="page-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                                
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        <h2 class="page_title">{{title}}</h2>
+                        <div class="page_image videocontainer radius6">
+                            <img src="{{image}}">
+                        </div>
+                        <p class="page_content">{{{content}}}</p>
+                        
+                        <div class="scrolltop radius20"><a onClick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);"><img src="images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
+                    </div>
+                    <!--End of page container-->
+                </div>
+            </script>
+
+            <script id="usercp-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg_menu clearfix">
+                        <h2 id="Note"></h2>
+                        
+                        <nav id="menu" style="margin-top:50px;">
+                            <ul>
+                                <li>
+                                    <a href="#" onclick="route('cikis');">
+                                        <img src="images/icons/about.png" alt="" title="" />
+                                        <span>Çıkış Yap</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="route('aidatlar');">
+                                        <img src="images/icons/about.png" alt="" title="" />
+                                        <span>{{yil}} Aidatlarım</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" onclick="route('tumaidatlar');">
+                                        <img src="images/icons/tools.png" alt="" title="" />
+                                        <span>Tüm Aidatlarım</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" onclick="route('usercpAyar');">
+                                        <img src="images/icons/services.png" alt="" title="" />
+                                        <span>Kullanıcı Ayarlar</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="clearfix"></div>         
+                </div>           
+            </script>
+
+            <script id="usercp-ayar-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        <h2 class="page_title">{{title}}</h2>
+                        <div class="form clearfix">
+                            <form autocomplete="off" id="kullaniciAyarForm">
+
+                                <label for="email">Email</label>
+                                <input type="text" class="form_input radius4" name="email" id="email" value="{{email}}">
+                                    
+                                <label for="gsm">Telefon no</label>
+                                
+                                <input type="text" class="form_input radius4" id="gsm" name="gsm" value="{{gsm}}">
+                                        
+                                <label for="newpassword">Yeni şifre</label>
+                                <input type="password" class="form_input radius4" id="password" name="password" autocomplete="off">
+                                <small>Şifreyi değiştirmemek için boş bırakabilirsiniz!</small>
+                                    
+                                <label for="v-password">Tekrar yeni şifre</label>
+                                <input type="password" class="form_input radius4" id="v-password" name="v-password" autocomplete="off">
+                                <small>Şifreyi değiştirmemek için boş bırakabilirsiniz!</small>
+                                
+                                <input type="button" id="kayarGonder" class="form_submit radius4 green green_borderbottom" value="Kaydet" />
+                            </form>
+                        </div>
+                    
+                    </div>           
+                </div>           
+            </script>
+
+            <script id="aidatlar-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        <h2 class="page_title">{{title}}</h2>
+                        <ul class="responsive_table">
+                            <li class="table_row">
+                                <div class="table_section_small">Ay</div>
+                                <div class="table_section">Tutar</div>
+                                <div class="table_section">Durum</div> 
+                            </li>
+                            {{#each aidatlar}}
+                            <li class="table_row">
+                                <div class="table_section_small">{{getAy @index}}</div>
+                                
+                                {{#if this}}
+                                    <div class="table_section">{{tutar}}</div> 
+                                    <div class="table_section">ödendi</div>
+                                {{else}}
+                                    <div class="table_section">{{../varsayilan_aidat_tutari}}</div>
+                                    <div class="table_section">ödenmedi</div> 
+                                {{/if}}
+                            </li>
+                            {{/each}}
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </script>
+
+            <script id="tumaidatlar-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        <h2 class="page_title">{{page_title}}</h2>
+
+
+                        <div class="page-list-container">
+                            <p>{{hata}}</p>
+                            
+                            <ul class="responsive_table">
+                                <li class="table_row">
+                                    <div class="table_section_small">Ay</div>
+                                    <div class="table_section">Yil</div>
+                                    <div class="table_section">Tutar</div> 
+                                </li>
+                                {{#each aidatlar}}
+                                <li class="table_row">
+                                    <div class="table_section_small">{{getAyy ay}}</div>
+                                    <div class="table_section">{{yil}}</div> 
+                                    <div class="table_section">{{tutar}}</div>
+                                </li>
+                                {{/each}}
+                            </ul>
+
+
+                        </div>
+                        <div>
+                            {{{sayfalama}}}
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="scrolltop radius20"><a onClick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);"><img src="images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
+                    </div>
+                    <!--End of page container-->
+                </div>
+            </script>
+
+            <script id="giris-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        
+                        <h2 class="page_title">Üye Girişi</h2>
+                        <h2 id="Note"></h2>
+                        <div class="form">
+                            <form id="loginForm">
+                                <label for="tcno">TCNO:</label>
+                                <input type="number" name="tcno" id="tcno" value="" class="form_input radius4 required" />
+                                <label for="password">Şifre:</label>
+                                <input type="password" name="password" id="password" value="" class="form_input radius4 required" />
+
+                                <input type="button" id="loginGonder" class="form_submit radius4 green green_borderbottom" id="submit" value="Giriş" />
+
+                                <label id="loader" style="display:none;"><img src="images/loader.gif" alt="Yükleniyor..." id="LoadingGraphic" /></label>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </script>
+            
+            <script id="posts-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        <h2 class="page_title">{{page_title}}</h2>
+
+
+                        <div class="page-list-container">
+                            <p>{{hata}}</p>
+                            
+                            {{#each contents}}
+                            <div class="portfolio_item radius8">
+                                <div class="portfolio_image">
+                                    <a onclick="{{../route}}({{id}})">
+                                        <img src="http://akyazikoyudernegi.com/storage/cover_images/{{cover_image}}" alt="{{title}}" title="{{title}}" border="0" />
+                                    </a>
+                                </div>
+                                <div class="portfolio_details">
+                                    <h4>{{title}}</h4>
+                                    <p>{{{icerikOzet content}}}</p>
+                                    <a class="view_details">Devamını Oku</a>
+                                </div>
+                            </div>
+                            {{/each}}
+
+
+                        </div>
+                        <div>
+                            
+                            {{{sayfalama}}}
+                            
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="scrolltop radius20"><a onClick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);"><img src="images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
+                    </div>
+                    <!--End of page container-->
+                </div>
+            </script>
+
+            <script id="post-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        <h2 class="page_title">{{title}}</h2>
+                        <div class="image_single radius4">
+                            <img src="http://akyazikoyudernegi.com/storage/cover_images/{{cover_image}}" alt="{{title}}" title="{{title}}" border="0" />
+                        </div>
+                        <p>
+                            {{{content}}}
+                        </p>
+                        
+                        <div class="clearfix"></div>
+                        <div class="scrolltop radius20"><a onClick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);"><img src="images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
+                    </div>
+                </div>
+            </script>
+
+            <script id="galeri-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        <h2 class="page_title">{{page_title}}</h2>
+                        <ul class="photo_gallery_13" style="margin-top:50px;">
+                            <p>{{hata}}</p>
+
+                            {{#each contents}}
+                            <li>
+                                <a href="http://akyazikoyudernegi.com/{{image}}" data-fancybox="gallery" data-options="{'caption' : '{{title}}'}" title="{{title}}">
+                                    <img class="primary-img" src="http://akyazikoyudernegi.com/{{thumbnail}}">
+                                </a>
+                            </li>
+                    
+                            {{/each}}
+
+                            
+                        </ul>
+                        <div>  
+                            {{{sayfalama}}}
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>  
+            </script>
+
+            <script id="iletisim-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        
+                        <h2 class="page_title">{{title}}</h2>
+                        <p>
+                            {{{content}}}
+                        </p>
+
+                        <h3 id="Note"></h3>
+                        <div class="form">
+                            <form id="iletisimFormu">
+
+                                <label>Ad:</label>
+                                <input type="text" name="ad" id="ad" value="" class="form_input radius4" required/>
+
+                                <label>Soyad:</label>
+                                <input type="text" name="soyad" id="soyad" value="" class="form_input radius4" required/>
+
+                                <label>Email:</label>
+                                <input type="text" name="email" id="email" value="" class="form_input radius4" required/>
+
+                                <label>Telefon:</label>
+                                <input type="text" name="gsm" id="gsm" value="" class="form_input radius4" required/>
+
+                                <label>Konu:</label>
+                                <input type="text" name="konu" id="konu" value="" class="form_input radius4" required/>
+                                <label>Mesajınız:</label>
+                                <textarea name="mesaj" id="mesaj" class="form_textarea radius4 textarea required" rows="" cols=""></textarea>
+
+                                <input type="hidden" name="user_id" value="{{user.id}}">
+                                <input type="button" id="iletisimGonder" name="submit" class="form_submit radius4 green green_borderbottom" id="submit" value="Gönder" />
+                                
+                            </form>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                        <div class="scrolltop radius20"><a onClick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);"><img src="images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
+                    </div>
+                </div>
+            </script>
+
+            <script id="yonetim-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+
+                <iframe src="http://akyazikoyudernegi.com/yonetim" style="margin-top:50px;width:100%;height: 100%;"></iframe>
+            </script>
+            
+            <script id="paylasimlar-tpl" type="text/template">
+                <div id="header">
+                    <div class="gohome radius20">
+                        <a onClick="route('anasayfa');" id="homebutton">
+                            <img src="images/icons/home.png" alt="Anasayfa" title="Anasayfa" />
+                        </a>
+                    </div>
+                    <div class="gomenu radius20">
+                        <a onclick="route('panel');" id="contactbutton">
+                            <img src="images/icons/about.png" alt="Üye Paneli" title="Üye Paneli" />
+                        </a>
+                    </div>
+                </div>
+                <div class="sliderbg">
+                    <div class="pages_container">
+                        
+                        <h2 class="page_title">{{page_title}}</h2>
+                        {{#if isLogged }}
+                        <h3>Bir şeyler paylaşın..</h2>
+                        <form id="paylasimForm" enctype="multipart/form-data">
+                            <label>Başlık:</label>
+                            <input type="text" name="title" id="title" value="" class="form_input radius4" required/>
+
+                            <label>Mesajınız:</label>
+                            <textarea name="content" id="content" class="form_textarea radius4 textarea required" rows="" cols="" style="width:93%;"></textarea>
+
+                            <label>Resim:</label>
+                            <input type="file" name="cover_image" id="cover_image" class="form_input radius4" />
+
+                            <input type="hidden" name="user_id" id="user_id" value="{{user.id}}">
+                            <input type="button" id="paylasimGonder" name="submit" class="form_submit radius4 green green_borderbottom" id="submit" value="Gönder" />
+
+                        </form>
+                        {{/if}}
+                        <div class="qa-message-list" id="wallmessages" style="margin-top:50px;">
+                            <h3>Kullanıcı Paylaşımları</h3>
+                            {{#each contents}}
+                            <div class="message-item" id="m16">
+                                <div class="message-inner">
+                                    <div class="message-head clearfix">
+                                        <div class="user-detail">
+                                            <h5 class="handle">{{ad}} {{soyad}}</h5>
+                                            <div class="post-meta">
+                                                <div class="asker-meta">
+                                                    <span class="qa-message-what"></span>
+                                                    <span class="qa-message-when">
+                                                        <span class="qa-message-when-data">tarafından</span>
+                                                    </span>
+                                                    <span class="qa-message-who">
+
+                                                        <span class="qa-message-who-data">{{created_at}}</span>
+                                                        <span class="qa-message-who-pad">tarihinde paylaşıldı.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="post-meta col-md-4" style="float:left;">
+                                        <img src="http://akyazikoyudernegi.com/storage/cover_images/{{cover_image}}" alt="{{title}}" style="width: 100%;height:auto;">
+                                    </div>
+                                    <div class="qa-message-content col-md-8" style="float:left;">
+                                        {{content}}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    
+                                </div>
+                            </div>
+                            {{/each}}
+
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </script>
+        </div>
+        <div class="modal"></div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/handlebars.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+
+    <script type="text/javascript" src="js/jquery.fancybox.min.js"></script>
+
+</body>
+
+</html>

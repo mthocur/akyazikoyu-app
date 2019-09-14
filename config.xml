@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.akyazi.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Akyazı Köyü</name>
+    <description>
+        Akyazı Köyü Derneği Mobil Uygulaması.
+    </description>
+    <author email="mthocur@gmail.com" href="http://mthocur.tk">
+        PhoneGap Team
+    </author>
+    <content src="index.html" />
+    <gap:plugin name="cordova-plugin-whitelist" source="npm"/>  
+    <access origin="*" />
+	<allow-intent href="*" />
+	<allow-navigation href="*" />
+
+    <preference name="orientation" value="portrait" />
+	<preference name="android-minSdkVersion" value="16" />
+	<preference name="android-targetSdkVersion" value="19" />
+
+
+</widget>
